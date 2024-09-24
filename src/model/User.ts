@@ -1,5 +1,7 @@
-import moogoose, {Schema, Document, } from "mongoose";
+
+import mongoose, {Schema, Document, } from "mongoose";
 import { string } from "zod";
+
 
 export interface Messages extends Document {
     content : string;
@@ -42,6 +44,6 @@ const UserSchema : Schema<User> = new Schema({
     updatedAt : {type : Date, default : Date.now},
 })
 
-const UserModel = (moogoose.models.User as moogoose.Model<User> )||  moogoose.model<User>("User", UserSchema);
+const UserModel = (mongoose.models.User as mongoose.Model<User> )||  mongoose.model<User>("User", UserSchema);
 
 export default UserModel;
