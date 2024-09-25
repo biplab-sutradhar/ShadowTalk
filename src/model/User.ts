@@ -1,7 +1,5 @@
-
 import mongoose, {Schema, Document, } from "mongoose";
 import { string } from "zod";
-
 
 export interface Messages extends Document {
     content : string;
