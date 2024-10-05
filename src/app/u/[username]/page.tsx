@@ -2,8 +2,8 @@ import React from 'react'
 
 const page = () => {
   return (
-    <div>Dashboard</div>
-  );
-};
+    <div>Message</div>
+  )
+}
 
 export default page
