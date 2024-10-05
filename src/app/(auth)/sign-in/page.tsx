@@ -4,12 +4,9 @@ import { useForm } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import * as z from "zod";
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import { useDebounceCallback } from "usehooks-ts";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { signinSchema } from "@/schemas/signinSchema";
-import axios, { AxiosError } from "axios";
-import { ApiResponse } from "@/types/ApiResponse";
+import { signIn } from "next-auth/react";
 import {
   Form,
   FormControl,
@@ -22,53 +19,57 @@ import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { signinSchema } from "@/schemas/signInSchema";
-import { signIn } from "next-auth/react";
+
 const Page = () => {
-  const [username, setUsername] = useState("");
-  const [usernameMessage, setUsernameMessage] = useState("");
-  const [isCheckingUsername, setIsCheckingUsername] = useState(false);
-
   const [isSubmitting, setIsSubmitting] = useState(false);
-
-  // we dont want to call the databse whenever we click the key
-  // usedebouce will help to wait for 300 ms then update
-  const debouncedUsername = useDebounceCallback(setUsername, 500);
   const { toast } = useToast();
   const router = useRouter();
 
-  // zod impletation
   const form = useForm<z.infer<typeof signinSchema>>({
     resolver: zodResolver(signinSchema),
     defaultValues: {
-      email: "",
+      identifier: "",
       password: "",
     },
   });
-  // const hello = form.watch('username')
 
   const onSubmit = async (data: z.infer<typeof signinSchema>) => {
-
-  const result =  await signIn("credentials", {
+    setIsSubmitting(true);
+    
+    const result = await signIn("credentials", {
       redirect: false,
       identifier: data.identifier,
       password: data.password,
     });
+    
+    console.error("Error during sign-in:", result?.error);
+
+    
+    setIsSubmitting(false);
 
     if (result?.error) {
+      let errorMessage;
+      switch (result.error) {
+        case "CredentialsSignin":
+          errorMessage = "Incorrect username or password.";
+          break;
+        case "Error: User not found with this email":
+          errorMessage = "No account found with this email.";
+          break;
+        default:
+          errorMessage = "An unknown error occurred. Please try again.";
+          break;
+      }
 
-      if (result?.error === "CredentialsSignin") {
       toast({
         title: "Signin failed",
-        description: "Incorrect username or password",
+        description: errorMessage,
         variant: "destructive",
       });
-    }
-
-    if (result?.url) {
+    } else if (result?.url) {
       router.replace('/dashboard');
     }
-  };}
-
+  };
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-800">
@@ -82,18 +83,16 @@ const Page = () => {
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-            
-
             <FormField
               name="identifier"
               control={form.control}
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel>Email/Username</FormLabel>
                   <FormControl>
-                    <Input {...field} name="email" />
+                    <Input {...field} placeholder="email or username" />
                   </FormControl>
-                  <FormMessage /> {/* This will show email validation messages */}
+                  <FormMessage />
                   <p className="text-muted text-gray-400 text-sm">
                     We will send you a verification code
                   </p>
@@ -108,34 +107,27 @@ const Page = () => {
                 <FormItem>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Input type="password" {...field} name="password" />
+                    <Input type="password" placeholder="password" {...field} />
                   </FormControl>
-                  <FormMessage /> {/* This will show password validation messages */}
+                  <FormMessage />
                 </FormItem>
               )}
             />
 
-            <Button type="submit" aria-busy={isSubmitting} className="w-full" disabled={isSubmitting}>
+            <Button type="submit" className="w-full" disabled={isSubmitting}>
               {isSubmitting ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                   Please wait
                 </>
               ) : (
-                "Sign Up"
+                "Sign In"
               )}
             </Button>
           </form>
         </Form>
 
-        <div className="text-center mt-4">
-          <p>
-            Already a member?{" "}
-            <Link href="/sign-in" className="text-blue-600 hover:text-blue-800">
-              Sign in
-            </Link>
-          </p>
-        </div>
+       
       </div>
     </div>
   );
