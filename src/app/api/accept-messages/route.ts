@@ -1,7 +1,7 @@
-import { getServerSession, User } from 'next-auth';
-import { authOptions } from '../auth/[...nextauth]/route';
+import { getServerSession, User } from 'next-auth'; 
 import dbConnect from '@/libs/dbConnects';
 import UserModel from '@/model/User';
+import { authOptions } from '../auth/[...nextauth]/options';
 
 export async function POST(request: Request) {
   await dbConnect();
@@ -60,7 +60,7 @@ export async function GET(request: Request) {
     return Response.json(
       {
         success: false,
-        message: 'User not found',
+        message: 'User not found?',
       },
       {
         status: 404,
