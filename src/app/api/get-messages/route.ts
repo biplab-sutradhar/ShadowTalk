@@ -30,17 +30,17 @@ export async function GET(request: Request) {
         {
           $sort: { "message.createdAt": -1 },
         },
-        { $group: { _id: "$_id", message: { $push: "$message" } } },
+        { $group: { _id: "$_id", messages: { $push: "$messages" } } },
       ])
       .exec();
 
-    // console.log("user data -> ", user);
+    console.log("user data -> ", user);
 
     if (!user || user.length === 0) {
       return Response.json(
         {
           success: false,
-          message: "user nahi found",
+          message: "user not found",
         },
         { status: 401 }
       );
@@ -49,10 +49,12 @@ export async function GET(request: Request) {
     return Response.json(
       {
         success: true,
-        messages: user[0].message, // sending whole message array 
+        messages: user[0].messages, // sending whole message array 
       },
       { status: 201 }
     );
+
+    
   } catch (error) {
     console.log("An unexpected error occured", error);
     return Response.json(

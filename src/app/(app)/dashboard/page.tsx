@@ -9,11 +9,13 @@ import { acceptMessagesSchema } from '@/schemas/acceptMessagesSchema';
 import { ApiResponse } from '@/types/ApiResponse';
 import { zodResolver } from '@hookform/resolvers/zod';
 import axios, { AxiosError } from 'axios';
+import { randomUUID } from 'crypto';
 import { Loader2, RefreshCcw } from 'lucide-react';
 import { User } from 'next-auth';
 import { useSession } from 'next-auth/react';
 import React, { useState, useEffect, useCallback } from 'react';
 import { useForm } from 'react-hook-form';
+import {v4 as uuid} from 'uuid';
 
 const Page = () => {
   const [messages, setMessages] = useState<Messages[]>([]);
@@ -21,7 +23,8 @@ const Page = () => {
   const [isSwitching, setIsSwitching] = useState(false);
   const { toast } = useToast();
   const { data: session } = useSession();
-
+  
+  
   const form = useForm({
     resolver: zodResolver(acceptMessagesSchema),
   });
@@ -34,12 +37,13 @@ const Page = () => {
     setLoading(true);
     try {
       const response = await axios.get('/api/accept-messages');
+
       setValue('acceptMessages', response.data.isAcceptingMessage);
     } catch (error) {
       const axiosError = error as AxiosError<ApiResponse>;
       toast({
         title: 'Error',
-        description: axiosError.response?.data.message ?? 'Failed to fetch messages',
+        description: 'Failed to fetch messages',
         variant: 'destructive',
       });
     } finally {
@@ -53,6 +57,8 @@ const Page = () => {
     setIsSwitching(false);
     try {
       const response = await axios.get<ApiResponse>('/api/get-messages');
+      // console.log(response?.data?.messages);
+      
       setMessages(response.data.messages || []);
       if (refresh) {
         toast({
@@ -65,7 +71,7 @@ const Page = () => {
       const axiosError = error as AxiosError<ApiResponse>;
       toast({
         title: 'Error',
-        description: axiosError.response?.data.message ?? 'Failed to fetch messages',
+        description: 'Failed to fetch messages',
         variant: 'destructive',
       });
     } finally {
@@ -88,29 +94,32 @@ const Page = () => {
     setMessages(messages.filter((message) => message._id !== messageId));
   };
 
-  const handleSwitchChange = async () => {
+
+  const handleSwitchChange = async (checked: boolean) => {
     setIsSwitching(true);
     try {
-      const response = await axios.get('/api/accept-messages', {
-        acceptMessages: !acceptMessages,
+      
+      const response = await axios.post('/api/accept-messages', {
+        acceptMessages: checked,
       });
-      setValue('acceptMessages', !acceptMessages);
+      setValue('acceptMessages', checked); // Update form state
       toast({
         title: 'Success',
-        description: response.data.message,
+        description: "Messages switched successfully",
         variant: 'default',
       });
-    } catch (error) {
-      const axiosError = error as AxiosError<ApiResponse>;
+    } catch (error ) {
       toast({
         title: 'Error',
-        description: axiosError.response?.data.message ?? 'Failed to switch messages',
+        description: 'Failed to switch messages',
         variant: 'destructive',
       });
     } finally {
       setIsSwitching(false);
     }
   };
+
+
 
   const { username } = session.user as User;
   const baseUrl = `${window.location.protocol}//${window.location.host}`;
@@ -142,11 +151,11 @@ const Page = () => {
 
       <div className="mb-4">
         <Switch
-          {...register('acceptMessages')}
           checked={acceptMessages}
-          onCheckedChange={handleSwitchChange}
+          onCheckedChange={(checked) => handleSwitchChange(checked)}
           disabled={isSwitching}
         />
+
         <span className="ml-2">
           Accept Messages: {acceptMessages ? 'On' : 'Off'}
         </span>
@@ -169,14 +178,14 @@ const Page = () => {
       </Button>
       <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-6">
         {messages.length > 0 ? (
-          
-          messages.map((message) => (
+
+          messages[0]?.map((message) => (
             
             <MessageCard
-            key={message.createdAt.toString()}
-            message={message}
-            onMessageDelete={handleDeleteMessage}
-          />
+              key={uuid()}
+              message={message}
+              onMessageDelete={handleDeleteMessage}
+            />
           ))
         ) : (
           <p>No messages to display.</p>

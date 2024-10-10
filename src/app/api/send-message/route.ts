@@ -1,5 +1,5 @@
 import dbConnect from "@/libs/dbConnects";
-import { Message } from "@/model/User"; 
+import UserModel, { Messages } from "@/model/User"; 
 export async function POST(request: Request) {
   await dbConnect();
   const { username, content} = await request.json();
@@ -21,7 +21,7 @@ export async function POST(request: Request) {
     }
     const newMessage = { content, createdAt: new Date() };
     // Push the new message to the user's messages array
-    user.messages.push(newMessage as Message);
+    user.messages.push(newMessage as Messages);
     await user.save();
     return Response.json(
       { message: 'Message sent successfully', success: true },

@@ -1,6 +1,6 @@
 'use client'
 
-import React  from 'react';
+import React from 'react';
 import axios, { AxiosError } from 'axios';
 import dayjs from 'dayjs';
 import { X } from 'lucide-react';
@@ -34,13 +34,25 @@ export function MessageCard({ message, onMessageDelete }: MessageCardProps) {
       const response = await axios.delete<ApiResponse>(
         `/api/delete-message/${message._id}`
       );
-      toast({
-        title: response.data.message,
-      });
-      onMessageDelete(message._id as string);
-
+      console.log("message in delete", message);
+      
+      console.log("response in delete", response);
+      
+  
+      if (response.data.success) {
+        toast({
+          title: 'Success',
+          description: 'Message deleted successfully',
+          variant: 'default',
+        });
+        onMessageDelete(message._id as string); // Call the function to remove from UI
+      } else {
+        throw new Error(response.data.message);
+      }
     } catch (error) {
       const axiosError = error as AxiosError<ApiResponse>;
+      console.log("error in delete", error);
+      
       toast({
         title: 'Error',
         description:
@@ -49,15 +61,19 @@ export function MessageCard({ message, onMessageDelete }: MessageCardProps) {
       });
     } 
   };
-
+  
   return (
-    <Card className="card-bordered">
+    <Card className="bg-white shadow-md rounded-lg border border-gray-200 p-4">
       <CardHeader>
-        <div className="flex justify-between items-center">
-          <CardTitle>{message.content}</CardTitle>
+        <div className="flex justify-between items-start">
+          <CardTitle className="text-lg font-semibold truncate">
+            <span className="block max-h-16 overflow-hidden line-clamp-5">
+              {message.content}
+            </span>
+          </CardTitle>
           <AlertDialog>
             <AlertDialogTrigger asChild>
-              <Button variant='destructive'>
+              <Button variant='destructive' >
                 <X className="w-5 h-5" />
               </Button>
             </AlertDialogTrigger>
@@ -80,11 +96,11 @@ export function MessageCard({ message, onMessageDelete }: MessageCardProps) {
             </AlertDialogContent>
           </AlertDialog>
         </div>
-        <div className="text-sm">
+        <div className="text-sm text-gray-500">
           {dayjs(message.createdAt).format('MMM D, YYYY h:mm A')}
         </div>
       </CardHeader>
-      <CardContent></CardContent>
+      <CardContent />
     </Card>
   );
 }
