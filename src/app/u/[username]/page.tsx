@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios, { AxiosError } from "axios";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -31,7 +31,7 @@ const parseStringMessages = (messageString: string): string[] => {
 };
 
 const initialMessageString =
-  "What's your favorite movie?||Do you have any pets?||What's your dream job?"; 
+  "What's your favorite movie?||Do you have any pets?||What's your dream job?";
 
 export default function Message_page() {
   const params = useParams<{ username: string }>();
@@ -46,6 +46,7 @@ export default function Message_page() {
 
   const messageContent = form.watch("content");
   const [isLoading, setIsLoading] = useState(false);
+  const [suggestedMessages, setSuggestedMessages] = useState<string[]>(parseStringMessages(initialMessageString));
 
   const onSubmit = async (data: z.infer<typeof messageSchema>) => {
     setIsLoading(true);
@@ -75,6 +76,25 @@ export default function Message_page() {
 
   const handleMessageClick = (message: string) => {
     form.setValue("content", message);
+  };
+
+  const fetchSuggestedMessages = async () => {
+    try {
+      const response = await axios.post<ApiResponse>("/api/suggest-messages");
+      const messages = parseStringMessages(response.data.generatedMessage || "");
+      setSuggestedMessages(messages);
+      toast({
+        title: "New messages generated!",
+        variant: "default",
+      });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to fetch new suggested messages. Using default messages.",
+        variant: "destructive",
+      });
+      // If the generation fails, suggestedMessages will remain the same.
+    }
   };
 
   return (
@@ -123,33 +143,32 @@ export default function Message_page() {
         </div>
 
         <Card>
-          <CardHeader>
-            <h3 className="text-xl font-semibold">Messages</h3>
-          </CardHeader>
-          <CardContent className="flex flex-col space-y-4">
-            {/* Display suggested messages here if needed */}
-            {/* Uncomment and implement suggested message logic if applicable */}
-            {/* parseStringMessages(completion).map((message, index) => (
-              <Button
-                key={index}
-                variant="outline"
-                className="mb-2"
-                onClick={() => handleMessageClick(message)}
-              >
-                {message}
-              </Button>
-            )) */}
-          </CardContent>
-        </Card>
+  <CardHeader className="flex justify-between items-center">
+    <h3 className="text-xl font-semibold">Messages</h3>
+    <div className="flex-grow" /> {/* This spacer will push the button to the right */}
+    <Button variant="default" onClick={fetchSuggestedMessages}>
+      Generate New Messages
+    </Button>
+  </CardHeader>
+  <CardContent className="flex flex-col space-y-4">
+    {suggestedMessages.map((message, index) => (
+      <Button
+        key={index}
+        variant="outline"
+        className="mb-2"
+        onClick={() => handleMessageClick(message)}
+      >
+        {message}
+      </Button>
+    ))}
+  </CardContent>
+</Card>
+
+
+        
       </div>
 
-      <Separator className="my-6" />
-      <div className="text-center">
-        <div className="mb-4">Get Your Message Board</div>
-        <Link href={"/sign-up"}>
-          <Button>Create Your Account</Button>
-        </Link>
-      </div>
+     
     </div>
   );
 }

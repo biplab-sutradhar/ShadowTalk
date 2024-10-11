@@ -35,16 +35,18 @@ const Page = () => {
 
   const onSubmit = async (data: z.infer<typeof signinSchema>) => {
     setIsSubmitting(true);
-    
+
     const result = await signIn("credentials", {
       redirect: false,
       identifier: data.identifier,
       password: data.password,
     });
-    
+
+     
     console.error("Error during sign-in:", result?.error);
 
-    
+
+
     setIsSubmitting(false);
 
     if (result?.error) {
@@ -61,13 +63,25 @@ const Page = () => {
           break;
       }
 
-      toast({
+    return( toast({
         title: "Signin failed",
         description: errorMessage,
         variant: "destructive",
-      });
+      }))
     } else if (result?.url) {
-      router.replace('/dashboard');
+      
+  
+     
+      setTimeout(() => {
+        router.replace('/dashboard');
+      }, 1000);  
+
+      return(toast({
+        title: "Sign-in successful",
+        description: "Redirecting to dashboard...",
+        variant: "default",
+      }))
+
     }
   };
 
@@ -76,7 +90,7 @@ const Page = () => {
       <div className="w-full max-w-md p-8 space-y-8 rounded-lg shadow-md">
         <div className="text-center">
           <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl mb-6">
-            Join True Feedback
+            Join ShadowTalk
           </h1>
           <p className="mb-4">Sign up to start your anonymous adventure</p>
         </div>
@@ -127,9 +141,15 @@ const Page = () => {
           </form>
         </Form>
 
-       
+
+        <Link href={"/sign-up"}>
+          <div className=" text-center w-full mt-4 hover:font-semibold">Create Your Account</div>
+        </Link>
+
+
       </div>
     </div>
+
   );
 };
 

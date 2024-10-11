@@ -24,6 +24,7 @@ const Page = () => {
   const { toast } = useToast();
   const { data: session } = useSession();
   
+  // console.log(messages[0].length);
   
   const form = useForm({
     resolver: zodResolver(acceptMessagesSchema),
@@ -62,7 +63,7 @@ const Page = () => {
       setMessages(response.data.messages || []);
       if (refresh) {
         toast({
-          title: 'Refreshed Messages',
+          title: 'Success',
           description: 'Messages refreshed successfully',
           variant: 'default',
         });
@@ -177,7 +178,7 @@ const Page = () => {
         )}
       </Button>
       <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-6">
-        {messages.length > 0 ? (
+        {messages[0]?.length > 0 ? (
 
           messages[0]?.map((message) => (
             

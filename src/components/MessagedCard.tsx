@@ -63,7 +63,7 @@ export function MessageCard({ message, onMessageDelete }: MessageCardProps) {
   };
   
   return (
-    <Card className="bg-white shadow-md rounded-lg border border-gray-200 p-4">
+    <Card className="bg-white shadow-md rounded-lg border relative border-gray-200 p-4">
       <CardHeader>
         <div className="flex justify-between items-start">
           <CardTitle className="text-lg font-semibold truncate">
@@ -71,15 +71,15 @@ export function MessageCard({ message, onMessageDelete }: MessageCardProps) {
               {message.content}
             </span>
           </CardTitle>
-          <AlertDialog>
+          <AlertDialog >
             <AlertDialogTrigger asChild>
               <Button variant='destructive' >
-                <X className="w-5 h-5" />
+                <X className="w-5 h-5 absolute" />
               </Button>
             </AlertDialogTrigger>
             <AlertDialogContent>
               <AlertDialogHeader>
-                <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                <AlertDialogTitle className='text-lg text-black font-semibold'>Are you absolutely sure?</AlertDialogTitle>
                 <AlertDialogDescription>
                   This action cannot be undone. This will permanently delete
                   this message.
@@ -89,7 +89,7 @@ export function MessageCard({ message, onMessageDelete }: MessageCardProps) {
                 <AlertDialogCancel>
                   Cancel
                 </AlertDialogCancel>
-                <AlertDialogAction onClick={handleDeleteConfirm}>
+                <AlertDialogAction className='bg-red-500' onClick={handleDeleteConfirm}>
                   Continue
                 </AlertDialogAction>
               </AlertDialogFooter>
