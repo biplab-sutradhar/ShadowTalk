@@ -4,6 +4,7 @@ import { Toaster } from "@/components/ui/toaster";
 import AuthProvider from "@/context/AuthProvier";
 import Navbar from "@/components/navbar";
 import React from "react";
+import { Sidebar } from "@/components/sidebar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,6 +23,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <AuthProvider>
               <Navbar />
+        <Sidebar />
           <div>
             {children}
           </div>
