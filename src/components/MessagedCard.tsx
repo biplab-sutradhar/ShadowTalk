@@ -63,11 +63,7 @@ export function MessageCard({ message, onMessageDelete }: MessageCardProps) {
   };
   
   return (
-<<<<<<< HEAD
     <Card className="bg-white dark:bg-gray-900 text-black dark:text-white shadow-md rounded-lg border relative border-gray-200 p-4">
-=======
-    <Card className="bg-white shadow-md rounded-lg border relative border-gray-200 p-4">
->>>>>>> 2ff8f5608bc6b6464652c83742421df2e92380cc
       <CardHeader>
         <div className="flex justify-between items-start">
           <CardTitle className="text-lg font-semibold truncate">

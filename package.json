@@ -13,22 +13,15 @@
     "@ai-sdk/openai": "^0.0.63",
     "@hookform/resolvers": "^3.9.0",
     "@radix-ui/react-alert-dialog": "^1.1.2",
-<<<<<<< HEAD
     "@radix-ui/react-collapsible": "^1.1.1",
     "@radix-ui/react-dropdown-menu": "^2.1.2",
     "@radix-ui/react-label": "^2.1.0",
     "@radix-ui/react-scroll-area": "^1.2.0",
-=======
-    "@radix-ui/react-label": "^2.1.0",
->>>>>>> 2ff8f5608bc6b6464652c83742421df2e92380cc
     "@radix-ui/react-separator": "^1.1.0",
     "@radix-ui/react-slot": "^1.1.0",
     "@radix-ui/react-switch": "^1.1.1",
     "@radix-ui/react-toast": "^1.2.1",
-<<<<<<< HEAD
     "@radix-ui/react-tooltip": "^1.1.3",
-=======
->>>>>>> 2ff8f5608bc6b6464652c83742421df2e92380cc
     "@react-email/components": "^0.0.25",
     "axios": "^1.7.7",
     "bcryptjs": "^2.4.3",
@@ -42,10 +35,7 @@
     "mongoose": "^8.6.3",
     "next": "14.2.13",
     "next-auth": "^4.24.7",
-<<<<<<< HEAD
     "next-themes": "^0.3.0",
-=======
->>>>>>> 2ff8f5608bc6b6464652c83742421df2e92380cc
     "npm": "^10.9.0",
     "react": "^18",
     "react-dom": "^18",
