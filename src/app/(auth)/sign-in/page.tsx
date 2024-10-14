@@ -132,7 +132,11 @@ const Page = () => {
               {isSubmitting ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+<<<<<<< HEAD
                   {/* Please wait */}
+=======
+                  Please wait
+>>>>>>> 2ff8f5608bc6b6464652c83742421df2e92380cc
                 </>
               ) : (
                 "Sign In"
