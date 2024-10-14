@@ -4,7 +4,11 @@ import { Inter } from "next/font/google";
 import { Toaster } from "@/components/ui/toaster";
 import AuthProvider from "@/context/AuthProvier";
 import Navbar from "@/components/navbar";
+<<<<<<< HEAD
 import React, { useState } from "react";
+=======
+import React from "react";
+>>>>>>> 7493dbccb16dbec3aaee11e127c4a6197ab2d562
 import { Sidebar } from "@/components/sidebar";
 
 const inter = Inter({ subsets: ["latin"] });
