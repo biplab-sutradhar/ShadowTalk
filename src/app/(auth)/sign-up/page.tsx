@@ -114,11 +114,7 @@ const Page = () => {
       <div className="w-full max-w-md p-8 space-y-8 rounded-lg shadow-md">
         <div className="text-center">
           <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl mb-6">
-<<<<<<< HEAD
             Join ShadowTalk
-=======
-            Join True Feedback
->>>>>>> 2ff8f5608bc6b6464652c83742421df2e92380cc
           </h1>
           <p className="mb-4">Sign up to start your anonymous adventure</p>
         </div>
@@ -161,11 +157,7 @@ const Page = () => {
                   <FormControl>
                     <Input {...field} name="email" />
                   </FormControl>
-<<<<<<< HEAD
                   <FormMessage /> 
-=======
-                  <FormMessage /> {/* This will show email validation messages */}
->>>>>>> 2ff8f5608bc6b6464652c83742421df2e92380cc
                   <p className="text-muted text-gray-400 text-sm">
                     We will send you a verification code
                   </p>
