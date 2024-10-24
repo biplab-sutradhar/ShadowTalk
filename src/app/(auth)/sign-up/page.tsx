@@ -88,8 +88,10 @@ const Page = () => {
         title: "Success",
         description: response.data.message,
       });
-
+      setTimeout(() => {
       router.replace(`/verify/${username}`);
+        
+      }, 1500);
 
       setIsSubmitting(false);
 

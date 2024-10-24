@@ -40,7 +40,10 @@ const VerifyAccount = () => {
         description: response.data.message,
         variant: 'default',
       });
+      setTimeout(() => {
       router.replace('/sign-in');
+        
+      }, 1500);
     } catch (error) {
       const axiosError = error as AxiosError<ApiResponse>;
       console.log(error);

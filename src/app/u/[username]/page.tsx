@@ -8,11 +8,7 @@ import * as z from "zod";
 import { Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-<<<<<<< HEAD
 import { CardHeader, CardContent, Card } from "@/components/ui/card";
-=======
-import { CardHeader, CardContent, Card } from "@/components/ui/card"; 
->>>>>>> 2ff8f5608bc6b6464652c83742421df2e92380cc
 import {
   Form,
   FormControl,
@@ -21,15 +17,9 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-<<<<<<< HEAD
 import { Textarea } from "@/components/ui/textarea";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-=======
-import { Textarea } from "@/components/ui/textarea"; 
-import Link from "next/link";
-import { useParams } from "next/navigation"; 
->>>>>>> 2ff8f5608bc6b6464652c83742421df2e92380cc
 import { messageSchema } from "@/schemas/messagesSchema"; // Ensure this path is correct
 import { toast } from "@/hooks/use-toast"; // Ensure this path is correct
 import { ApiResponse } from "@/types/ApiResponse"; // Ensure this path is correct
@@ -40,8 +30,7 @@ const parseStringMessages = (messageString: string): string[] => {
   return messageString.split(specialChar);
 };
 
-const initialMessageString =
-  "What's your favorite movie?||Do you have any pets?||What's your dream job?";
+const initialMessageString = "What's your favorite movie?||Do you have any pets?||What's your dream job?";
 
 export default function Message_page() {
   const params = useParams<{ username: string }>();
@@ -97,11 +86,7 @@ export default function Message_page() {
         title: "New messages generated!",
         variant: "default",
       });
-<<<<<<< HEAD
     } catch (error: any) {
-=======
-    } catch (error) {
->>>>>>> 2ff8f5608bc6b6464652c83742421df2e92380cc
       toast({
         title: "Error",
         description: "Failed to fetch new suggested messages. Using default messages.",
@@ -112,7 +97,6 @@ export default function Message_page() {
   };
 
   return (
-<<<<<<< HEAD
     <div className="flex flex-col min-h-screen bg-white dark:bg-gray-800">
     <div className="container mx-auto my-8 p-6 rounded max-w-4xl flex-grow">
       <h1 className="text-4xl font-bold mb-6 text-center text-black dark:text-white">
@@ -121,21 +105,11 @@ export default function Message_page() {
   
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="border  space-y-6">
-=======
-    <div className="container mx-auto my-8 p-6 rounded max-w-4xl">
-      <h1 className="text-4xl font-bold mb-6 text-center">
-        Public Profile Link
-      </h1>
-
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
->>>>>>> 2ff8f5608bc6b6464652c83742421df2e92380cc
           <FormField
             name="content"
             control={form.control}
             render={({ field }) => (
               <FormItem>
-<<<<<<< HEAD
                 <FormLabel className="text-black dark:text-white">
                   Send Anonymous Message to @{username}
                 </FormLabel>
@@ -143,13 +117,6 @@ export default function Message_page() {
                   <Textarea
                     placeholder="Write your anonymous message here"
                     className="resize-none border "
-=======
-                <FormLabel>Send Anonymous Message to @{username}</FormLabel>
-                <FormControl>
-                  <Textarea
-                    placeholder="Write your anonymous message here"
-                    className="resize-none"
->>>>>>> 2ff8f5608bc6b6464652c83742421df2e92380cc
                     {...field}
                   />
                 </FormControl>
@@ -171,7 +138,6 @@ export default function Message_page() {
           </div>
         </form>
       </Form>
-<<<<<<< HEAD
   
       <div className="space-y-4 my-8">
         <div className="space-y-2">
@@ -207,41 +173,5 @@ export default function Message_page() {
     </div>
   </div>
   
-=======
-
-      <div className="space-y-4 my-8">
-        <div className="space-y-2">
-          <p>Click on any message below to select it.</p>
-        </div>
-
-        <Card>
-  <CardHeader className="flex justify-between items-center">
-    <h3 className="text-xl font-semibold">Messages</h3>
-    <div className="flex-grow" /> {/* This spacer will push the button to the right */}
-    <Button variant="default" onClick={fetchSuggestedMessages}>
-      Generate New Messages
-    </Button>
-  </CardHeader>
-  <CardContent className="flex flex-col space-y-4">
-    {suggestedMessages.map((message, index) => (
-      <Button
-        key={index}
-        variant="outline"
-        className="mb-2"
-        onClick={() => handleMessageClick(message)}
-      >
-        {message}
-      </Button>
-    ))}
-  </CardContent>
-</Card>
-
-
-        
-      </div>
-
-     
-    </div>
->>>>>>> 2ff8f5608bc6b6464652c83742421df2e92380cc
   );
 }

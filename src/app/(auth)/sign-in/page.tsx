@@ -45,8 +45,6 @@ const Page = () => {
      
     console.error("Error during sign-in:", result?.error);
 
-
-
     setIsSubmitting(false);
 
     if (result?.error) {
@@ -74,13 +72,15 @@ const Page = () => {
      
       setTimeout(() => {
         router.replace('/dashboard');
-      }, 1000);  
+      }, 1500);  
 
-      return(toast({
+      return(
+        toast({
         title: "Sign-in successful",
         description: "Redirecting to dashboard...",
         variant: "default",
-      }))
+      })
+    )
 
     }
   };
@@ -132,11 +132,7 @@ const Page = () => {
               {isSubmitting ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-<<<<<<< HEAD
                   {/* Please wait */}
-=======
-                  Please wait
->>>>>>> 2ff8f5608bc6b6464652c83742421df2e92380cc
                 </>
               ) : (
                 "Sign In"

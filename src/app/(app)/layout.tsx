@@ -1,11 +1,11 @@
-'use client'
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import { Toaster } from "@/components/ui/toaster";
+'use client' 
+import { Inter } from "next/font/google"; 
 import AuthProvider from "@/context/AuthProvier";
 import Navbar from "@/components/navbar";
 import React, { useState } from "react";
 import { Sidebar } from "@/components/sidebar";
+import { ToastProvider } from "@/components/ui/toast";
+import { Toaster } from "@/components/ui/toaster";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,6 +26,9 @@ export default function RootLayout({
           <Sidebar setIsClosed={setIsClosed} />
           <div className={`${isClosed ? "ml-[224px]" : "ml-[80px]"}`}>
             {children}
+            <ToastProvider>
+          <Toaster />
+        </ToastProvider>
           </div>
         </AuthProvider>
       </body>

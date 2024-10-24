@@ -12,7 +12,7 @@ import {
 export default function Home() {
   return (
     <>
-      <main className="flex-grow min-h-screen flex flex-col items-center justify-center px-4 md:px-24 py-12 bg-white dark:bg-gray-800 text-black dark:text-white">
+      <main className="flex-grow min-h-screen flex flex-col items-center justify-center px-4 md:px-24 py-12 bg-white  dark:bg-gray-800 text-black dark:text-white">
         <section className="text-center mb-8 md:mb-12">
           <h1 className="text-3xl md:text-5xl font-bold">
             Dive into the World of Anonymous Feedback
@@ -52,8 +52,8 @@ export default function Home() {
         </Carousel>
       </main>
 
-      <footer className="text-center p-4 md:p-6 bg-gray-900 text-white">
-        © 2024 True Feedback. All rights reserved.
+      <footer className="text-center p-4 md:p-6 text-black dark:text-white bg-white dark:bg-gray-900 border">
+        © 2024 Shadowtalk All rights reserved.
       </footer>
     </>
   );

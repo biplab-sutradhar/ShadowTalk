@@ -17,7 +17,10 @@ function Navbar() {
     const { theme, setTheme } = useTheme();
 
     useEffect(() => {
-        setIsDashboard(pathname === '/dashboard');
+        setTimeout(() => {
+            setIsDashboard(pathname === '/dashboard');  
+        }, 1500);
+      
     }, [pathname]);
 
     return (
