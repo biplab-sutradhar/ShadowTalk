@@ -11,7 +11,7 @@ console.log(setIsClosed);
   return (
     <aside
       className={cn(
-        "fixed top-0 left-0 z-20 h-screen bg-gray-300 dark:bg-gray-800 shadow-xl text-white transition-transform duration-300",
+        "fixed top-0 left-0 z-20 border-r h-screen bg-gray-300 dark:bg-gray-800 shadow-xl text-white transition-transform duration-300",
         isOpen ? "w-56" : "w-[80px] -translate-x-full lg:translate-x-0"
       )}
     >
