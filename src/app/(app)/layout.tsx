@@ -22,7 +22,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <AuthProvider>
-          <Navbar />
+          <Navbar isClosed={isClosed}/>
           <Sidebar setIsClosed={setIsClosed} />
           <div className={`${isClosed ? "ml-[224px]" : "ml-[80px]"}`}>
             {children}
