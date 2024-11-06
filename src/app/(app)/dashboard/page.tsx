@@ -1,7 +1,7 @@
 'use client';
 import { MessageCard } from '@/components/MessagedCard';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+// import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
 import { Switch } from '@/components/ui/switch';
 import { decrypt } from '@/helpers/cryptFunction';
@@ -32,7 +32,7 @@ const Page = () => {
     resolver: zodResolver(acceptMessagesSchema),
   });
 
-  const { register, watch, setValue } = form;
+  const {  watch, setValue } = form;
   const acceptMessages = watch('acceptMessages');
 
   // Always call hooks first before any conditional rendering
@@ -140,13 +140,13 @@ const Page = () => {
   const baseUrl = `${window.location.protocol}//${window.location.host}`;
   const profileUrl = `${baseUrl}/u/${username}`;
 
-  const copyToClipboard = () => {
-    navigator.clipboard.writeText(profileUrl);
-    toast({
-      title: 'URL Copied!',
-      description: 'Profile URL has been copied to clipboard.',
-    });
-  };
+  // const copyToClipboard = () => {
+  //   navigator.clipboard.writeText(profileUrl);
+  //   toast({
+  //     title: 'URL Copied!',
+  //     description: 'Profile URL has been copied to clipboard.',
+  //   });
+  // };
 
   return (
     <div className="min-h-screen my-0 mx-0 p-6 bg-gray-100 dark:bg-black flex flex-col">
