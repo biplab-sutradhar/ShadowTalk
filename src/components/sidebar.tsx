@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
-import { Home, Settings, HelpCircle, Menu as MenuIcon, User } from "lucide-react";
+import { Home, Settings, HelpCircle, Menu as MenuIcon, User, Send } from "lucide-react";
 import Link from "next/link";
 
 export function Sidebar({ setIsClosed }) {
@@ -14,7 +14,8 @@ export function Sidebar({ setIsClosed }) {
 
   const navItems = [
     { href: "/dashboard", icon: <Home className="w-6 h-6" />, label: "Dashboard" },
-    { href: "/settings", icon: <Settings className="w-6 h-6" />, label: "Settings" },
+    { href: "/message", icon: <Send className="w-6 h-6" />, label: "Message" },
+    // { href: "/settings", icon: <Settings className="w-6 h-6" />, label: "Settings" },
     { href: "/help", icon: <HelpCircle className="w-6 h-6" />, label: "Help" },
   ];
 

@@ -15,8 +15,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const [isClosed, setIsClosed] = useState(false);
-  console.log(setIsClosed);
+  const [isClosed, setIsClosed] = useState(false); 
 
   return (
     <html lang="en">

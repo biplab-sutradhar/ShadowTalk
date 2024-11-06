@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
 import { Switch } from '@/components/ui/switch';
+import { decrypt } from '@/helpers/cryptFunction';
 import { useToast } from '@/hooks/use-toast';
 import { Messages } from '@/model/User';
 import { acceptMessagesSchema } from '@/schemas/acceptMessagesSchema';
@@ -23,6 +24,7 @@ const Page = () => {
   const [isSwitching, setIsSwitching] = useState(false);
   const { toast } = useToast();
   const { data: session } = useSession();
+  const key = process.env.KEY || "e4a0b083f53a07d62b7858311a58f33b8f02c8a74f6cb8319356502b46c6cf25"; // Ensure default key is correct
 
   // console.log(messages[0].length);
 
@@ -53,14 +55,24 @@ const Page = () => {
   }, [setValue]);
 
   const fetchMessages = useCallback(
-    async (refresh: boolean = false) => {
+    async (refresh = false) => {
       setLoading(true);
       setIsSwitching(false);
       try {
         const response = await axios.get<ApiResponse>('/api/get-messages');
-        // console.log(response?.data?.messages);
-
-        setMessages(response.data.messages || []);
+        console.log(response);
+  
+        // Iterate over the nested messages and decrypt each content
+        const decryptedMessages = response.data.messages.map((messageGroup) =>
+          messageGroup.map((message) => ({
+            ...message,
+            content: decrypt(message.content, key),
+          }))
+        );
+  
+        // Update state with the decrypted messages
+        setMessages(decryptedMessages);
+  
         if (refresh) {
           toast({
             title: 'Success',
@@ -82,7 +94,7 @@ const Page = () => {
     },
     [setMessages]
   );
-
+  
   useEffect(() => {
     if (!session || !session.user) return;
     fetchAcceptMessages();
@@ -141,22 +153,7 @@ const Page = () => {
       <h1 className="text-4xl font-bold mb-4 text-black dark:text-white">
         User Dashboard
       </h1>
-      <div className="mb-4">
-        <h2 className="text-lg font-semibold mb-2 text-black dark:text-white">
-          Copy Your Unique Link
-        </h2>
-        <div className="flex items-center">
-          <Input
-            type="text"
-            value={profileUrl}
-            disabled
-            className="input input-bordered w-full p-2 mr-2 border-gray-400 dark:border-gray-600 text-black dark:text-white bg-white dark:bg-gray-800"
-          />
-          <Button onClick={copyToClipboard} variant={'default'}>
-            Copy
-          </Button>
-        </div>
-      </div>
+      
 
       <div className="mb-4">
         <Switch
