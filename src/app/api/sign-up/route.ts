@@ -46,7 +46,7 @@ export async function POST(req: Request) {
 
     if (existingUserVerifiedByEmail) {
       existingUserVerifiedByEmail.password = hashedPassword;
-      existingUserVerifiedByEmail.verifyCode = verifyCode;
+      // existingUserVerifiedByEmail.verifyCode = verifyCode;
       existingUserVerifiedByEmail.verifyCodeExpiry = new Date(
         Date.now() + 3600000
       );
@@ -59,9 +59,9 @@ export async function POST(req: Request) {
         username,
         email,
         password: hashedPassword,
-        verifyCode,
+        // verifyCode,
         verifyCodeExpiry: expiryDate,
-        isVerified: false,
+        isVerified: true,
         isAcceptingMessage: true,
         messages: [],
       });
@@ -69,18 +69,19 @@ export async function POST(req: Request) {
       await newUser.save();
     }
 
-    const emailResponse = await sendVerificationEmail(
-      email,
-      username,
-      verifyCode
-    );
+    // Commenting out the email sending part
+    // const emailResponse = await sendVerificationEmail(
+    //   email,
+    //   username,
+    //   verifyCode
+    // );
 
-    if (!emailResponse.success) {
-      return Response.json(
-        { success: false, message: emailResponse.message },
-        { status: 500 }
-      );
-    }
+    // if (!emailResponse.success) {
+    //   return Response.json(
+    //     { success: false, message: emailResponse.message },
+    //     { status: 500 }
+    //   );
+    // }
 
     return Response.json(
       { success: true, message: 'User created successfully' },

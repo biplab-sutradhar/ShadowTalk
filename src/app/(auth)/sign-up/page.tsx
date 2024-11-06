@@ -89,7 +89,7 @@ const Page = () => {
         description: response.data.message,
       });
       setTimeout(() => {
-      router.replace(`/verify/${username}`);
+      router.replace(`/sign-in`);
         
       }, 1500);
 
@@ -176,7 +176,7 @@ const Page = () => {
                   <FormControl>
                     <Input type="password" {...field} name="password" />
                   </FormControl>
-                  <FormMessage /> {/* This will show password validation messages */}
+                  <FormMessage /> 
                 </FormItem>
               )}
             />

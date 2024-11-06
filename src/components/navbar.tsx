@@ -139,7 +139,7 @@ function Navbar({ isClosed }: { isClosed: boolean }) {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <Link href="/login">
+                <Link href="/sign-in">
                   <Button 
                     variant="default"
                     className="bg-purple-600 hover:bg-purple-700 text-white"
