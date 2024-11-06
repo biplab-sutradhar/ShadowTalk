@@ -1,4 +1,4 @@
-import { sendVerificationEmail } from '@/helpers/sendVerificationEmail';
+// import { sendVerificationEmail } from '@/helpers/sendVerificationEmail';
 import dbConnect from '@/libs/dbConnects';
 import UserModel from '@/model/User';
 import bcrypt from 'bcryptjs';
@@ -7,9 +7,9 @@ const hashPassword = async (password: string) => {
   return await bcrypt.hash(password, 10);
 };
 
-const generateVerifyCode = () => {
-  return Math.floor(100000 + Math.random() * 900000).toString();
-};
+// const generateVerifyCode = () => {
+//   return Math.floor(100000 + Math.random() * 900000).toString();
+// };
 
 export async function POST(req: Request) {
   await dbConnect();
@@ -41,7 +41,7 @@ export async function POST(req: Request) {
       isVerified: true,
     });
 
-    const verifyCode = generateVerifyCode();
+    // const verifyCode = generateVerifyCode();
     const hashedPassword = await hashPassword(password);
 
     if (existingUserVerifiedByEmail) {
